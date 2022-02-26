@@ -22923,15 +22923,14 @@ const lists = [
     [
         'tomato',
         'cucumber',
-        'onion'
+        'onion',
+        'mango'
     ]
 ];
 const App = ()=>{
     _s();
     const [value, changeValue] = _react.useState(0);
-    const [selection, setSelection] = _react.useState([
-        'mango'
-    ]);
+    const [selection, setSelection] = _react.useState([]);
     return(/*#__PURE__*/ _jsxRuntime.jsxs("div", {
         __source: {
             fileName: "App.tsx",
@@ -22974,6 +22973,8 @@ const App = ()=>{
             }),
             /*#__PURE__*/ _jsxRuntime.jsx(_table.Table, {
                 data: ingredients,
+                selected: selection,
+                onChange: setSelection,
                 __source: {
                     fileName: "App.tsx",
                     lineNumber: 26,
@@ -22983,6 +22984,8 @@ const App = ()=>{
             }),
             /*#__PURE__*/ _jsxRuntime.jsx(_table.Table, {
                 data: lists,
+                selected: selection,
+                onChange: setSelection,
                 __source: {
                     fileName: "App.tsx",
                     lineNumber: 27,
@@ -22993,7 +22996,7 @@ const App = ()=>{
         ]
     }));
 };
-_s(App, "EE3Oi14UIE5Tl2JnMSUHcTicy2c=");
+_s(App, "ktWPkxWUFZFL8F/vsjpiGBD3EJk=");
 _c = App;
 var _c;
 $RefreshReg$(_c, "App");
@@ -23146,31 +23149,51 @@ var _jsxRuntime = require("react/jsx-runtime");
 var _react = require("react");
 var _reactDefault = parcelHelpers.interopDefault(_react);
 const Table = (props)=>{
+    const isSelected = (element)=>{
+        if (props.selected.includes(element)) return {
+            backgroundColor: 'green'
+        };
+        return {
+        };
+    };
+    const toggleSelection = (selectedElement)=>{
+        const newSelection = props.selected.filter((element)=>element !== selectedElement
+        );
+        if (!props.selected.includes(selectedElement)) newSelection.push(selectedElement);
+        props.onChange(newSelection);
+    };
     return(/*#__PURE__*/ _jsxRuntime.jsx("table", {
         __source: {
             fileName: "Table.tsx",
-            lineNumber: 8,
+            lineNumber: 26,
             columnNumber: 5
         },
         __self: undefined,
         children: /*#__PURE__*/ _jsxRuntime.jsx("tbody", {
             __source: {
                 fileName: "Table.tsx",
-                lineNumber: 9,
+                lineNumber: 27,
                 columnNumber: 7
             },
             __self: undefined,
             children: props.data.map((row)=>/*#__PURE__*/ _jsxRuntime.jsx("tr", {
                     __source: {
                         fileName: "Table.tsx",
-                        lineNumber: 11,
+                        lineNumber: 29,
                         columnNumber: 11
                     },
                     __self: undefined,
                     children: row.map((column)=>/*#__PURE__*/ _jsxRuntime.jsx("td", {
+                            style: {
+                                //...isSelected(column),
+                                background: props.selected.includes(column) ? 'green' : undefined,
+                                cursor: 'pointer'
+                            },
+                            onClick: ()=>toggleSelection(column)
+                            ,
                             __source: {
                                 fileName: "Table.tsx",
-                                lineNumber: 13,
+                                lineNumber: 31,
                                 columnNumber: 15
                             },
                             __self: undefined,
